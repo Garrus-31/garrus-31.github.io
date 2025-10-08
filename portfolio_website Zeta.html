@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* UPDATED: Set Alan Sans as the default font */
+            font-family: 'Alan Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #0a0a0a;
+            scroll-behavior: smooth;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(128, 0, 255, 0.4);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(128, 0, 255, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #521f84;
+        }
+
+        .nav-menu a.active {
+            color: #521f84;
+            text-shadow: 0 0 10px rgba(82, 31, 132, 0.8),
+                 0 0 20px rgba(82, 31, 132, 0.5),
+                 0 0 30px rgba(82, 31, 132, 0.3);
+            font-weight: 700;
+}
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            /* **MODIFIED**: Added image background with a dark, purplish overlay for contrast */
+            background: 
+                linear-gradient(rgba(10, 10, 10, 0.7), rgba(46, 29, 101, 0.5)), 
+                url('https://images.unsplash.com/photo-1550745165-9bc0b252726f') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* **MODIFIED**: Retained animation, changed solid gradient to transparent to show image */
+            background: 
+                 linear-gradient(135deg, transparent 0%, rgba(128, 0, 255, 0.08) 50%, transparent 100%);
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(82, 31, 132, 0.03) 2px,
+                    rgba(82, 31, 132, 0.03) 4px
+                ),
+                radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
+            animation: scanlines 0.1s linear infinite, screenFlicker 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(4px); }
+        }
+
+        @keyframes screenFlicker {
+            0%, 90%, 100% { 
+                opacity: 1; 
+                filter: brightness(1) contrast(1);
+            }
+            91% { 
+                opacity: 0.8; 
+                filter: brightness(1.2) contrast(0.9);
+            }
+            92% { 
+                opacity: 0.9; 
+                filter: brightness(0.9) contrast(1.1);
+            }
+            93% { 
+                opacity: 1; 
+                filter: brightness(1) contrast(1);
+            }
+            94% { 
+                opacity: 0.85; 
+                filter: brightness(1.1) contrast(0.95);
+            }
+            95% { 
+                opacity: 1; 
+                filter: brightness(1) contrast(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            z-index: 1;
+            position: relative;
+        }
+
+        .binary-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .binary-stream {
+            position: absolute;
+            top: -100px;
+            color: rgba(128, 0, 255, 1);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.2;
+            white-space: nowrap;
+            animation: binaryFall linear infinite;
+            user-select: none;
+            pointer-events: none;
+            /* **ADDED**: Neon glow effect to stand out against the new background */
+            text-shadow: 0 0 5px rgba(128, 0, 255, 0.8), 0 0 10px rgba(128, 0, 255, 0.5); 
+        }
+
+        .binary-stream:nth-child(1) { left: 5%; animation-duration: 15s; animation-delay: -5s; opacity: 0.8; }
+        .binary-stream:nth-child(2) { left: 15%; animation-duration: 12s; animation-delay: -3s; opacity: 0.6; }
+        .binary-stream:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: -8s; opacity: 0.7; }
+        .binary-stream:nth-child(4) { left: 35%; animation-duration: 20s; animation-delay: -2s; opacity: 0.5; }
+        .binary-stream:nth-child(5) { left: 45%; animation-duration: 14s; animation-delay: -6s; opacity: 0.9; }
+        .binary-stream:nth-child(6) { left: 55%; animation-duration: 16s; animation-delay: -4s; opacity: 0.6; }
+        .binary-stream:nth-child(7) { left: 65%; animation-duration: 13s; animation-delay: -7s; opacity: 0.8; }
+        .binary-stream:nth-child(8) { left: 75%; animation-duration: 19s; animation-delay: -1s; opacity: 0.4; }
+        .binary-stream:nth-child(9) { left: 85%; animation-duration: 17s; animation-delay: -9s; opacity: 0.7; }
+        .binary-stream:nth-child(10) { left: 95%; animation-duration: 11s; animation-delay: -5s; opacity: 0.5; }
+
+        @keyframes binaryFall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: glitch 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        .name-highlight {
+            color: #333;
+            animation: nameGlitch 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        /* .highlight {
+            color:#521f84;
+            font-weight: bold;
+        }
+
+        .highlight-glow {
+            color: #521f84;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(128, 0, 255, 0.5);
+        } */
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            /* color: #333; */
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: subtitleGlitch 4s ease-in-out infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% {
+                transform: translate(0);
+                filter: hue-rotate(0deg);
+            }
+            10% {
+                transform: translate(-1px, 1px);
+                filter: hue-rotate(90deg);
+            }
+            20% {
+                transform: translate(1px, -1px);
+                filter: hue-rotate(180deg);
+            }
+            30% {
+                transform: translate(-1px, -1px);
+                filter: hue-rotate(270deg);
+            }
+            40% {
+                transform: translate(1px, 1px);
+                filter: hue-rotate(360deg);
+            }
+            50% {
+                transform: translate(-1px, 1px);
+            }
+            60% {
+                transform: translate(1px, -1px);
+            }
+        }
+
+        @keyframes nameGlitch {
+            0%, 85%, 100% {
+                text-shadow: 0 0 0 transparent;
+            }
+            15% {
+                text-shadow: -2px 0 #00ff88, 2px 0 #ff0088;
+            }
+            25% {
+                text-shadow: 2px 0 #00ff88, -2px 0 #ff0088;
+            }
+            35% {
+                text-shadow: -1px 0 #00ff88, 1px 0 #ff0088;
+            }
+        }
+
+        @keyframes subtitleGlitch {
+            0%, 90%, 100% {
+                opacity: 0.9;
+                transform: translate(0);
+                text-shadow: 0 0 0 transparent;
+            }
+            5% {
+                opacity: 0.7;
+                transform: translate(1px, 0);
+                text-shadow: -1px 0 #00ff88, 1px 0 #ff0088;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translate(-1px, 0);
+                text-shadow: 1px 0 #00ff88, -1px 0 #ff0088;
+            }
+            15% {
+                opacity: 0.6;
+                transform: translate(0, 1px);
+                text-shadow: 0 -1px #00ff88, 0 1px #ff0088;
+            }
+        }
+
+        @keyframes buttonGlitch {
+            0%, 95%, 100% {
+                transform: translate(0);
+                box-shadow: 0 0 0 transparent;
+            }
+            2% {
+                transform: translate(-1px, 1px);
+                box-shadow: 2px 0 #00ff88, -2px 0 #ff0088;
+            }
+            4% {
+                transform: translate(1px, -1px);
+                box-shadow: -2px 0 #00ff88, 2px 0 #ff0088;
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #e0e0e0;
+        }
+
+        /* About Section */
+        .about {
+            background: #111111;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(128, 0, 255, 0.6);
+            border: 3px solid #9b59b6;
+}
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+}
+
+        /* .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #141414;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(128, 0, 255, 0.6);
+        } */
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-item {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(128, 0, 255, 0.6);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(128, 0, 255, 0.6);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: #141414;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: #111111;
+        }
+
+        /* Project Tabs */
+        .project-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tab {
+            padding: 0.8rem 2rem;
+            background: #111111;
+            color: white;
+            border: 2px solid rgba(128, 0, 255, 0.3);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .project-tab:hover {
+            background: rgba(128, 0, 255, 0.1);
+            border-color: #521f84;
+        }
+
+        .project-tab.active {
+            background: #521f84;
+            color: #000;
+            border-color: #521f84;
+            font-weight: bold;
+        }
+
+        .project-category {
+            display: none;
+        }
+
+        .project-category.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(128, 0, 255, 0.6);
+        }
+
+        /* Projects Section */
+        /* ... existing CSS ... */
+
+        .project-category.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* NEW RULE FOR CENTERING A PROJECT CARD */
+        .project-card.centered-card {
+            /* Force the card to start at column 2 (or a suitable column for centering) */
+            /* The 'grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))' makes this tricky, 
+               so we use a combination of properties to force it */
+            
+            /* Center the card within its available column space */
+            justify-self: center; 
+            
+            /* Ensure the centered card doesn't take up more space than a standard card */
+            max-width: 350px; 
+            
+            /* This property is key: it tells the card to start at a specific grid line.
+               Forcing it to start at column 2 (of 3) often centers it nicely. 
+               This will only work well on desktop screens where 3 or more columns fit. */
+            grid-column-start: 2; 
+        }
+
+        /* Fallback for smaller screens (like 2-column or 1-column layout) */
+        @media (max-width: 992px) {
+            .project-card.centered-card {
+                /* Reset grid-column-start on tablets/mobiles to maintain flow */
+                grid-column-start: auto;
+                /* Ensure it still takes up 100% of its column */
+                justify-self: stretch; 
+                max-width: none;
+            }
+        }
+        
+        /* ... rest of your CSS ... */
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(128, 0, 255, 0.6);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #141414;
+            font-size: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            background: #3498db;
+            color: #141414;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: #2980b9;
+        }
+
+        /* Contact Section */
+        .contact {
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item a:hover {
+            color: #3498db !important;
+        }
+
+        .contact-item i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            padding: 1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #111111;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #3498db;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- <div class="logo">Kajogbola Faatih</div> -->
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="binary-background">
+            <div class="binary-stream">1010110100111010101100100111010110100101110101011001001110101101001011101010110010011101011010010111010</div>
+            <div class="binary-stream">0101001011010101011001110010101101010010110101010110011100101011010100101101010101100111001010110101</div>
+            <div class="binary-stream">1100101110101011001001110101101001011101010110010011101011010010111010101100100111010110100101110101</div>
+            <div class="binary-stream">0011010101011001110010101101010010110101010110011100101011010100101101010101100111001010110101001011</div>
+            <div class="binary-stream">1010110100111010101100100111010110100101110101011001001110101101001011101010110010011101011010010111010</div>
+            <div class="binary-stream">0110101010110011100101011010100101101010101100111001010110101001011010101011001110010101101010010110</div>
+            <div class="binary-stream">1001110101101001011101010110010011101011010010111010101100100111010110100101110101011001001110101101</div>
+            <div class="binary-stream">0101101010101100111001010110101001011010101011001110010101101010010110101010110011100101011010100101</div>
+            <div class="binary-stream">1110101101001011101010110010011101011010010111010101100100111010110100101110101011001001110101101001</div>
+            <div class="binary-stream">0010110101010110011100101011010100101101010101100111001010110101001011010101011001110010101101010010</div>
+        </div>
+        <div class="hero-content">
+            <h1>Hello, I'm <span class="name-highlight">Faatih</span></h1>
+            <p class="subtitle">A double threat professional blending the creativity of Game Development with the essential protection of Cybersecurity.</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>My name is <span class="highlight">Kajogbola Faatih</span> and I'm a passionate game developer and cybersecurity professional with expertise in creating immersive gaming experiences and protecting digital assets. I hold a Master's degree in <span class="highlight">Cybersecurity</span> from the <span class="highlight">National College of Ireland</span>, along with several certifications in Game Development. I specialize in building immersive, scalable gaming experiences and implementing robust security measures using my deep understanding of both game engines and security frameworks.</p>
+                    <br>
+                    <p>My game development journey spans multiple genres and platforms, from mobile games to more advanced PC experiences. I'm proficient in Unreal Engine Blueprint scripting and C++, with a strong focus on gameplay mechanics, optimization, and user experience. On the cybersecurity side, I focus on system hardening, penetration testing, and secure website and application development. I don't just build secure systems, I build systems that are fundamentally creative, robust, and designed to withstand real-world threats from the ground up.</p>
+                    <br>
+                    <p>I aim to deliver high-quality, immersive experiences where security is incorporated into every aspect of their design, not just as a mere afterthought. I'm always excited to take on new challenges and collaborate with like-minded individuals. Together, I believe we can build something truly exceptional and unbreakable.</p>
+                </div>
+                <div class="about-image">
+                    <div class="profile-img">
+                        <img src="Profile.jpg" alt="Your Name">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Programming</h3>
+                    <p>C++, Java, Python, Blueprint.</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Game Engines</h3>
+                    <p>Unreal Engine, Unity.</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Technology</h3>
+                    <p>Git, Docker, AWS, Linux, HTML/CSS, Cryptography, MySQL, PHP, Node.js.</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Soft Skills</h3>
+                    <p>Team Collaboration, Problem Solving, Effective Communication, Project Management.</p>
+                </div>
+                <!-- <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Backend Development</h3>
+                    <p>Node.js, Python, PHP, Express, Django, Laravel</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Database</h3>
+                    <p>MySQL, PostgreSQL, MongoDB, Firebase</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fab fa-aws"></i>
+                    </div>
+                    <h3>Cloud & DevOps</h3>
+                    <p>AWS, Docker, Git, CI/CD, Linux</p>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section projects">
+    <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        
+        <!-- Project Tabs -->
+        <div class="project-tabs">
+            <button class="project-tab active" data-category="games">Game Development</button>
+            <button class="project-tab" data-category="cybersecurity">Cybersecurity Projects</button>
+            <button class="project-tab" data-category="hybrid">Hybrid Projects</button>
+        </div>
+
+        <!-- Games Category -->
+        <div class="project-category active" id="games">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Pinball.jpg">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Unreal Pinball</h3>
+                    <p class="project-description">A simple pinball game inspired by the classic Full Tilt Pinball! game from Windows 95. My very first game development project built exclusively with blueprint in UE4.  Over the course of this project, I was able to familiarize myself with the different aspects of the Unreal Editor and take my first vital steps towards game development.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/tkv3hUDVw-s" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/unreal-pinball" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Wave Survival.jpg">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Wave Survival</h3>
+                    <p class="project-description">A simple wave survival game with the goal of defeating all the enemies before you run out of health. It was my second UE4 project, built entirely using Blueprint and free mobile assets from the Epic Games Store. While working on this project, I learned the fundamentals of animation states, AI design and particle systems.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/foD526A7MOc" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/wave-survival" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Obstacle Assault.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Obstacle Assault</h3>
+                    <p class="project-description">This was the first project I built using the newly upgraded UE5. In this project, the goal is to avoid all the obstacles and make it to the end of the obstacle course. Over the course of this project, I reacquainted myself with the familiar but new design of the upgraded Unreal Editor.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/Xl8VQSt6jvo" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/obstacle-assault" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Toon Tanks.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Battle Tanks</h3>
+                    <p class="project-description">This was my second major project made with UE5. Building this project required a good understanding of the UE sculpting and landscape tools to design the landscape that served as the battleground. It uses a mix of both C++ programming and Blueprint scripting. The objective was simply to destroy all the enemy tanks before they overwhelmed you. The game features an enemy AI that switches from the "Idle" to "Attacking" state immediately the player gets close to them.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/A67Yw4hVWYI" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/toontanks" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Crypt Raider.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Crypt Raider</h3>
+                    <p class="project-description">I wanted to learn more about the nanite and lumen lighting system, so I figured I'd try my hand at making a little horror project. The code for this project was mostly done with C++, but blueprint was used for the level design. In addition to learning about the nanite and lumen lighting systems, I also learned a decent amount about sound design and how to trigger actions when elements possessing the acceptable tags overlap.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/ROMsl8h8YFc" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/crypt-raider" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Shooter.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Unreal Shooter</h3>
+                    <p class="project-description">A simple third-person shooter game I made using free assets from the canceled Paragon game. The programming of this game was mostly done using C++, with Blueprint being used for level design. Over the course of this project, I learned a lot about the different animation states and poses, how to attach sounds to animation montages, how to use line traces to cause damage to the overlapped actors, and a deeper understanding of enemy AI design.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/9kbHM8kwc1Y" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/shooter" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card centered-card">
+                <div class="project-image">
+                    <img src="Open World.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Open World RPG</h3>
+                    <p class="project-description">This was my most ambitious UE5 project. It combines everything I've learned over the years into a single sprawling level with different locations, multiple enemy types, all with different animation states and attack patterns, unique mechanics like sword equipping and sheathing and RPG elements like experience and currency. Designing this project involved significant effort utilizing both C++ and Blueprint. </p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/DHqsnJlWB88" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/open-world-rpg" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cybersecurity Category -->
+        <div class="project-category" id="cybersecurity">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Cloud.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Cloud Architecture Project</h3>
+                    <p class="project-description">The main objective of this project was to set up a cloud environment and then completely secure it by initiating a Cloud VM Instance (IaaS) via AWS, configuring a LAMP Stack and a WordPress site on the same instance, and securing both the EC2 instance and the WordPress site. The main tools used in this project are given below. Nmap was used for network scanning, Wireshark was used for network analysis, OWASP Zap was used for security testing, DataDog and CloudWatch were both used for monitoring, Qualys SSL Labs was used to analyse the SSL configuration, Mini Orange 2FA was used to provide authentication and access management, Inactive Logout was used to provide session management, Simple Cloudflare Turnstile provided user verification, while Akismet Anti-spam provided spam filtering.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/5gtV3YqDqe8" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <!-- <a href="#" class="project-link">GitHub</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="SWD.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Secure Web Application Project</h3>
+                    <p class="project-description">This project focuses on designing a web-based to-do list application that provides users with a streamlined, secure platform for task management, while also providing enhanced security and functionality. Built with HTML, Node.js, Express, and SQLite, the application incorporates essential features such as user registration, login, session management, and task creation/editing. The primary objective is to provide robust security, while also delivering a user-friendly experience. The security features implemented include User Authentication, Input Validation, Using Parameterized Queries, Password Hashing, Session Control, Using Secured Cookies, Cache Control, Error Handling and Role-Based Access Control. 
+</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/kygg54Ga8u0" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://github.com/Garrus-31/Secure-ish-Web-App" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="SAD.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Secure Application Development Project</h3>
+                    <p class="project-description">This project involved securing an intentionally vulnerable Java Application. Doing this required conducting SAST and DAST using different state-of-the-art tools. SonarQube and Snyk Code were used for SAST, while OWASP Zap was used for DAST. After completing the security testing, a manual code review was also performed to find and fix any potential security flaws. Finally, the fixed code was uploaded to the provided GitHub repo.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/u5zKtyibkRI" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://github.com/Garrus-31/Secure-App" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card centered-card">
+                <div class="project-image">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">AI/ML Hybrid Deep Learning Framework</h3>
+                    <p class="project-description">This project proposes a way to enhance intrusion detection capabilities using a hybrid deep learning model. The model will use an Autoencoder (AE) to learn normal network behaviour and an XGBoost classifier, using the AE's reconstruction error as a feature to identify anomalies. The Shapley Additive Explanations (SHAP) XAI technique will be incorporated to provide enhanced interpretability. The model’s performance was eveluated against simulated zero-day attacks using the trained CICIDS2017 dataset, which is a benchmark containing diverse network traffic flows including normal activity and common cyberattacks. The performance was then compared against baseline models, focusing on detection rates for unseen attacks and overall classification accuracy while maintaining low false positives.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Garrus-31/AI-ML-Project" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hybrid Category -->
+        <div class="project-category" id="hybrid">
+            <div class="project-card centered-card">
+                <div class="project-image">
+                    <img src="Cyberknights.png">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Cyberknights</h3>
+                    <p class="project-description">I developed this project for my thesis with the aim of joining my passion for cybersecurity and game development together. It's obvious that the weakest link in cybersecurity are people themselves, due to this I felt as though there was a need to find ways to improve the average person's cybersecurity posture. However, the average person finds learning about topics like online safety and phishing awareness quite boring, so I thought to myself "How could I make learning about cybersecurity a little more fun?" and my answer was to use my knowledge to develop a hybrid cybersecurity and game development project where the gameplay itself is centered around the concepts of cybersecurity.</p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/MKlcy18Z5pY" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://maverick-099.itch.io/cyberknights" target="_blank" rel="noopener noreferrer" class="project-link">Itch.io</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>I'm always interested in hearing about new opportunities and exciting projects. Feel free to reach out!</p><br>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Garrus31@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <a href="https://linkedin.com/in/renegade-studios" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; transition: color 0.3s ease;">linkedin.com/in/renegade-studios</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Dublin, Ireland</span>
+                    </div>
+                </div>
+                
+                <form class="contact-form" action="https://formsubmit.co/Garrus31@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/Garrus-31" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/renegade-studios" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                <a href="https://maverick-099.itch.io" target="_blank" rel="noopener noreferrer"><i class="fab fa-itch-io"></i></a>
+                <!-- <a href="https://studio.youtube.com/channel/UCQZ5Hcy2kwFZTdD1vOfnp7Q/videos/upload?filter=%5B%5D&sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a> -->
+            </div>
+            <p>&copy; 2025 Kajogbola Faatih. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Highlight active section in navigation
+        const sections = document.querySelectorAll('.section, .hero');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+    
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+    
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(20, 20, 20, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(20, 20, 20, 0.95)';
+            }
+        });
+
+        // Project category tabs
+        const projectTabs = document.querySelectorAll('.project-tab');
+        const projectCategories = document.querySelectorAll('.project-category');
+
+        projectTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and categories
+                projectTabs.forEach(t => t.classList.remove('active'));
+                projectCategories.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding category
+                const category = tab.getAttribute('data-category');
+                document.getElementById(category).classList.add('active');
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.skill-item, .project-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
